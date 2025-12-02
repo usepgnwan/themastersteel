@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@plugin 'tailwind-scrollbar';
+
+@theme static {  
+  --ui-header-height : 80px; 
+}
+
+
+.pp-skeleton {
+  @apply rounded-lg bg-gray-200 relative overflow-hidden;
+}
+
+.pp-skeleton::before {
+  @apply content-[''] absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent animate-[shimmer_0.8s_infinite];
+}

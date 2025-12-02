@@ -1,0 +1,1 @@
+export const useTabData = () => useState('tab-data', () => [])
