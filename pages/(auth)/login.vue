@@ -1,4 +1,8 @@
 <script setup lang="ts"> 
+definePageMeta({
+    layout: 'auth',
+    // middleware: ['admin']
+});
 import { reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus' 
 
