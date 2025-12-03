@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import CardProduct from '~/components/MainLayout/card-product.vue';
-
+    import CardProduct from '~/components/MainLayout/card-product.vue'; 
 </script>
 
 <template> 
@@ -21,11 +20,11 @@ import CardProduct from '~/components/MainLayout/card-product.vue';
             <div class="w-full p-4 rounded-2xl bg-black text-white">
                 <h5 class="text-xl">Rekomendasi</h5>
             </div>
-            <div class="grid grid-cols-6 mt-14 max-lg:grid-cols-3 max-md:grid-cols-2 gap-2" >
+            <div class="grid grid-cols-5 mt-14 max-lg:grid-cols-3 max-md:grid-cols-2 gap-2" >
                <CardProduct />
             </div>
             <div class="flex justify-end mt-5">
-                <NuxtLink href="product-detail" class="text-blue-800 hover:text-blue-900">Lihat selengkapnya</NuxtLink>
+                <NuxtLink href="product-list" class="text-blue-800 hover:text-blue-900">Lihat selengkapnya</NuxtLink>
             </div>
         </div>
     </section>   

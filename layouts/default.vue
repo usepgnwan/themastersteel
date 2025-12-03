@@ -3,9 +3,9 @@
 import * as Lmain from "~/components/MainLayout";
 </script>
 
-<template>
+<template >
   <Lmain.Header/>
-  <div> 
+  <div > 
     <slot />
   </div>
   <Lmain.Footer />

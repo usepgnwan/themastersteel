@@ -4,9 +4,9 @@
     <header class="fixed top-0 w-full bg-gradient-to-r from-black to-gray-800 shadow border-b-2 p-4 z-10">
         <div class="mx-auto w-3/4 max-lg:w-full max-lg:space-x-2 flex justify-between">
             <div class="w-2/3 flex space-x-2 items-center px-4">
-                <div class="w-1/4 max-lg:hidden">
+                <NuxtLink href="/" class="w-1/4 max-lg:hidden">
                     <NuxtImg format="webp" src="/images/logo-steelms.png" width="150"  />
-                </div>
+                </NuxtLink>
                  <div class="relative w-3/4 max-lg:w-full bg-white rounded-xl px-4 py-3 max-md:py-2">    
                     <UIcon 
                         name="i-material-symbols-search-rounded" 
@@ -35,18 +35,18 @@
                     />
                     <span>3</span>
                 </div>
-                <div class="flex items-center space-x-2 max-md:space-x-0">
+                <NuxtLink href="/cart" class="flex items-center space-x-2 max-md:space-x-0">
                      <UIcon 
                         name="i-uil-cart" 
                         class="  text-xl"
                     />
                     <span>3</span>
-                </div>
+                </NuxtLink>
                 <div>
                      |
                 </div>
                 <div class="text-white">
-                    <NuxtLink href="login">Login</NuxtLink>
+                    <NuxtLink href="/login">Login</NuxtLink>
                 </div>
             </div>
         </div>
