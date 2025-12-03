@@ -10,9 +10,9 @@ export default defineEventHandler(async event => {
 
   const formdata = JSON.parse(decrypted);
 
-  const { data, error, status } = await api.post('user-internal/login', {
+  const { data, error, status } = await api.post('user/login', {
     body: formdata,
-    type: 'role'
+    type: 'main'
   });
 
   setResponseStatus(event, status);

@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup lang="ts">
+const { $auth_user } = useNuxtApp() // user dashboard
+</script>
 
 <template>
     <header class="fixed top-0 w-full bg-gradient-to-r from-black to-gray-800 shadow border-b-2 p-4 z-10">
@@ -20,7 +22,12 @@
                 </div>
 
             </div>
-            <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4">
+            <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4" v-if="$auth_user?.name !== undefined">
+                <NuxtLink href="/dashboard" class="flex items-center space-x-2 max-md:space-x-0"> 
+                    <span>ke > Dashboard</span>
+                </NuxtLink>
+            </div>
+            <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4" v-if="$auth_user?.name === undefined">
                 <div class="flex items-center space-x-2 max-md:space-x-0">
                      <UIcon 
                         name="i-mingcute-notification-line" 

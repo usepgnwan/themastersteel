@@ -8,18 +8,17 @@ type ApiRequestOptions = {
   body?: object;
   wablast?: boolean;
   mailblast?: boolean;
-  type?: 'main' | 'role';
+  type?: 'main';
   token?: string;
   headers?: Record<string, string>;
   throwError?: boolean;
 };
 
 export const useApi = () => {
-  const { BASE_MAIN_URL, BASE_ROLE_URL, SECRET_ROLE_KEY } = useRuntimeConfig();
+  const { BASE_API_MAIN_URL,  SECRET_API_MAIN_KEY } = useRuntimeConfig();
   const URL_MAP = {
-    main: BASE_MAIN_URL,
-    role: BASE_ROLE_URL,
-    undefined: BASE_MAIN_URL
+    main: BASE_API_MAIN_URL, 
+    undefined: BASE_API_MAIN_URL
   };
   const isFullURL = (path: string): boolean => {
     try {
@@ -29,7 +28,7 @@ export const useApi = () => {
       return false;
     }
   };
-  const getFullURL = (path: string, type: 'main' | 'role' | undefined): string => {
+  const getFullURL = (path: string, type: 'main' | undefined): string => {
     return isFullURL(path) ? path : URL_MAP[type || 'main'] + path;
   };
   const buildHeaders = (opts: ApiRequestOptions): Record<string, string> => {
@@ -39,7 +38,7 @@ export const useApi = () => {
     };
     
     if (opts.type === 'main') {
-      headers['x-tes-themastersteel'] = SECRET_ROLE_KEY;
+      headers['x-tes-themastersteel'] = SECRET_API_MAIN_KEY;
     } 
     return headers;
   };

@@ -7,6 +7,17 @@ export default defineNuxtConfig({
   ui:{
     colorMode:false,
   },
+ 
+  runtimeConfig: {
+    public: {
+      secretForm: process.env.PUBLIC_SECRET_FORM,
+      BASE_URL: process.env.BASE_URL,
+      APP_ENV: process.env.APP_ENV,
+    },
+    BASE_API_MAIN_URL: process.env.BASE_API_MAIN_URL, 
+    SECRET_API_MAIN_KEY: process.env.SECRET_API_MAIN_KEY, 
+    SECRET_TOKEN_KEY: process.env.SECRET_TOKEN_KEY, 
+  },
   vite:{
       build: {
         rollupOptions: {

@@ -25,6 +25,8 @@ const adjustTotal = (type:string) =>{
         }
     }
 }
+
+const { $auth_user } = useNuxtApp() // user dashboard
 </script>
 <template>
     <section class="min-h-screen max-w-screen-xl mx-auto max-md:w-11/12 mt-32 max-lg:mt-32 space-y-10 md:px-12 xl:px-0">
@@ -51,7 +53,7 @@ const adjustTotal = (type:string) =>{
                     <h3 class="text-3xl font-semibold">Rp. 500000 </h3>
                     <p class="line-clamp-6 ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium libero tempore ipsam! Aut velit eius nesciunt vero dolores sint quis vitae aspernatur, error reiciendis nisi? Temporibus nihil cupiditate ad doloremque nesciunt recusandae officia! Aliquam labore dicta eum, dignissimos nostrum, vel ratione accusamus animi totam laborum cumque laudantium, sed sapiente. Laudantium, ut et delectus voluptate libero sapiente labore quia placeat quidem. In, nam minima unde quo aliquid dolore doloribus eum quas perferendis a! Facilis velit tempore aspernatur magnam modi id sapiente assumenda beatae aut quibusdam recusandae optio reprehenderit minima voluptatum a, sed, autem culpa quidem! Repellat unde amet nisi beatae, id temporibus rem iusto accusantium asperiores quis adipisci eum optio obcaecati hic, sunt exercitationem aperiam earum. Rerum maiores quibusdam ipsa nisi nobis laborum doloremque sit, nam eligendi nesciunt optio, harum iusto mollitia totam! Rerum autem dolorem inventore est ad! Laboriosam aliquam maiores deleniti exercitationem, cupiditate culpa, libero accusantium dolor quas ex labore, repudiandae tempora debitis distinctio amet? Veritatis cupiditate iure corporis quis iusto minima quo nihil, laborum dolorum voluptates ab aspernatur consectetur unde facere optio, maxime cumque vero, necessitatibus similique fugit deserunt quas ut! Ut, voluptatibus ratione. A ut natus magnam illo illum provident porro! Ab nobis facilis quia hic ut excepturi. Distinctio accusantium odit veniam odio recusandae, reprehenderit harum natus porro magnam adipisci molestias dolor alias modi, explicabo provident sed similique ut ratione labore a exercitationem? Dolor nam magni dolore et error. Officiis quas obcaecati repellendus molestias dignissimos dolore id inventore culpa laudantium consequatur. Adipisci ducimus vero neque, sequi, quibusdam voluptate quae quasi beatae illo architecto quam aliquam itaque obcaecati magni quaerat alias maiores et commodi doloremque! Blanditiis, quaerat voluptas dicta dolorem quos officiis quas eveniet quia aliquid praesentium laborum unde exercitationem quidem minima sunt recusandae? Adipisci in praesentium ex suscipit temporibus rem sapiente consequatur ab non vitae. Blanditiis, placeat!</p>
                 </div>
-                <div class="grid grid-cols-3 mt-10 gap-3">
+                <div class="grid grid-cols-3 mt-10 gap-3" v-if="$auth_user?.name === undefined">
                     <div class="inline-flex items-center space-x-2 ">
                         <button
                         type="button" 
