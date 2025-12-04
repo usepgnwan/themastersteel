@@ -6,7 +6,7 @@ const { $auth_buyer , $auth_user} = useNuxtApp() // user dashboard
 
 let open = ref<Boolean>(false)
 const items = computed<DropdownMenuItem[]>(() => {
-  if (!$auth_buyer?.value) {
+  if ( $auth_buyer?.value == null) {
     return []
   }
 
