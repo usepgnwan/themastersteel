@@ -8,9 +8,9 @@ export default defineEventHandler(async event => {
     const origin = headers.origin || headers.referer || "";
     const config = useRuntimeConfig();
     const allowedOrigin = config.public.BASE_URL; 
-    if (!origin || !allowedOrigin || !origin.startsWith(allowedOrigin)) {
-        return new Response("Unauthorized", { status: 403 });
-    }
+    // if (!origin || !allowedOrigin || !origin.startsWith(allowedOrigin)) {
+    //     return new Response("Unauthorized", { status: 403 });
+    // }
     
     const query = getQuery(event) 
     let uri = new URLSearchParams()
