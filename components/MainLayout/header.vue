@@ -88,10 +88,10 @@ const items = computed<DropdownMenuItem[]>(() => {
                 <div>
                      |
                 </div>
-                <div class="text-white" v-if="auth_buyer === undefined">
+                <div class="text-white" v-if="$auth_buyer === null">
                     <NuxtLink href="/login">Login</NuxtLink>
                 </div>
-                <UDropdownMenu :items="items" :content="{ align: 'start' }" :ui="{ content: 'w-48' }" v-model:open="open" v-if="auth_buyer !== undefined"> 
+                <UDropdownMenu :items="items" :content="{ align: 'start' }" :ui="{ content: 'w-48' }" v-model:open="open" v-if="$auth_buyer !== undefined"> 
                       <div class="rounded-3xl px-3 py-1  shadow text-white  bg-gradient-to-r from-black to-black/75 items-center flex space-x-2 cursor-pointer">
                     
                         <div class="flex flex-col px-1">
