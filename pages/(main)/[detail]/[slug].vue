@@ -1,12 +1,8 @@
 <script setup lang="ts">
 const route = useRoute()
+const { toRupiah } = useGlobal();
 const slug = route.params.slug
-const img = ref([{
-    src:"/images/steel2.jpg"
-},
-{
-    src:"/images/steel.jpg"
-}]);
+const img = ref([]);
 
 const imgFirst = ref(0);
 
@@ -35,10 +31,41 @@ const addtocart = () =>{
         return navigateTo('/login');
     }
 }
+
+
+    let row = ref<any[]>([])
+    let loading = ref<Boolean>(true)
+    const getData = async ()=>{
+        loading.value = true; 
+        let data = {
+            table : 'product/'+slug,
+            type_table : 'main', 
+        }
+ 
+    
+        try{ 
+            let d = await useServerApi({action:"GET",url:'/api/dd/get/data', payload:data})
+    
+            if(d.status !== 200){
+                return showToast("Terjadi kesalahan", "error")
+            } 
+            let r = d.data.data; 
+
+            img.value = r.product_image
+            row.value = r
+        }catch(e){
+            // console.log(e)
+            return showToast("Terjadi kesalahan", "error") 
+        }
+    }
+    onMounted(async()=>{ 
+        await getData().finally(()=>{loading.value = false}); 
+    });
 </script>
 <template>
     <section class="min-h-screen max-w-screen-xl mx-auto max-md:w-11/12 mt-32 max-lg:mt-32 space-y-10 md:px-12 xl:px-0">
-        <div class="flex space-x-3">
+        <MainLayoutPartialsSkeletonDetailproduct v-if="loading"/>
+        <div class="flex space-x-3" v-if="!loading">
             <div class="w-2/5 p-4 h-72">
                 <div class="relative">
                     <button v-if="imgFirst !== 0"   @click="slide(imgFirst - 1)" class="hover:cursor-pointer absolute -left-4 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-blue-950/75 text-white shadow   flex items-center justify-center">
@@ -49,7 +76,12 @@ const addtocart = () =>{
                         <UIcon name="i-mingcute-right-line" class="w-5 h-5"></UIcon> 
                     </button> 
                     
-                    <NuxtImg format="webp" :src="img[imgFirst].src" class="w-full h-full object-cover aspect-square" />
+                    <NuxtImg format="webp" v-if="img[imgFirst] !== undefined" :src="img[imgFirst].src" class="w-full h-full object-cover aspect-square" />
+                    <div v-if="img[imgFirst] === undefined"  class="flex items-center justify-center w-full h-96  bg-gray-300  dark:bg-gray-700"  >
+                        <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                            <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                        </svg>
+                    </div>
                 </div>
                <div class="grid grid-cols-5 gap-3 mt-3"> 
                     <NuxtImg   @click="slide(k)" format="webp" :src="v.src" class="w-full h-full object-cover aspect-square cursor-pointer" v-for="(v,k) in img" :key="k" /> 
@@ -57,9 +89,9 @@ const addtocart = () =>{
             </div>
             <div class="p-4  w-3/5 ">
                 <div class="space-y-4">
-                    <h4 class="text-2xl font-semibold">Lorem ipsum dolor, sit amet consectetur adipisicing elit. </h4>
-                    <h3 class="text-3xl font-semibold">Rp. 500000 </h3>
-                    <p class="line-clamp-6 ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium libero tempore ipsam! Aut velit eius nesciunt vero dolores sint quis vitae aspernatur, error reiciendis nisi? Temporibus nihil cupiditate ad doloremque nesciunt recusandae officia! Aliquam labore dicta eum, dignissimos nostrum, vel ratione accusamus animi totam laborum cumque laudantium, sed sapiente. Laudantium, ut et delectus voluptate libero sapiente labore quia placeat quidem. In, nam minima unde quo aliquid dolore doloribus eum quas perferendis a! Facilis velit tempore aspernatur magnam modi id sapiente assumenda beatae aut quibusdam recusandae optio reprehenderit minima voluptatum a, sed, autem culpa quidem! Repellat unde amet nisi beatae, id temporibus rem iusto accusantium asperiores quis adipisci eum optio obcaecati hic, sunt exercitationem aperiam earum. Rerum maiores quibusdam ipsa nisi nobis laborum doloremque sit, nam eligendi nesciunt optio, harum iusto mollitia totam! Rerum autem dolorem inventore est ad! Laboriosam aliquam maiores deleniti exercitationem, cupiditate culpa, libero accusantium dolor quas ex labore, repudiandae tempora debitis distinctio amet? Veritatis cupiditate iure corporis quis iusto minima quo nihil, laborum dolorum voluptates ab aspernatur consectetur unde facere optio, maxime cumque vero, necessitatibus similique fugit deserunt quas ut! Ut, voluptatibus ratione. A ut natus magnam illo illum provident porro! Ab nobis facilis quia hic ut excepturi. Distinctio accusantium odit veniam odio recusandae, reprehenderit harum natus porro magnam adipisci molestias dolor alias modi, explicabo provident sed similique ut ratione labore a exercitationem? Dolor nam magni dolore et error. Officiis quas obcaecati repellendus molestias dignissimos dolore id inventore culpa laudantium consequatur. Adipisci ducimus vero neque, sequi, quibusdam voluptate quae quasi beatae illo architecto quam aliquam itaque obcaecati magni quaerat alias maiores et commodi doloremque! Blanditiis, quaerat voluptas dicta dolorem quos officiis quas eveniet quia aliquid praesentium laborum unde exercitationem quidem minima sunt recusandae? Adipisci in praesentium ex suscipit temporibus rem sapiente consequatur ab non vitae. Blanditiis, placeat!</p>
+                    <h4 class="text-2xl font-semibold">{{ row.title }} </h4>
+                    <h3 class="text-3xl font-semibold">Rp. {{ toRupiah(row.harga) }} </h3>
+                    <p class="line-clamp-6 ">{{ row.deskripsi }}</p>
                 </div>
                 <div class="grid grid-cols-3 mt-10 gap-3" v-if="$auth_user?.name === undefined">
                     <div class="inline-flex items-center space-x-2 ">

@@ -1,5 +1,43 @@
 <script setup lang="ts">
     import CardProduct from '~/components/MainLayout/card-product.vue'; 
+import Emptyproduct from '~/components/MainLayout/emptyproduct.vue';
+
+    let row = ref<any[]>([])
+    let limit = ref<Number>(10)
+    let page = ref<Number>(1)   
+    let total = ref<Number>(1)  
+    let loading = ref<Boolean>(true)
+    
+    const {showToast} = useGlobal();
+    const getData = async ()=>{
+        loading.value = true; 
+        let data = {
+            table : 'product',
+            type_table : 'main',
+            page : page.value,
+            limit : limit.value,
+            title : '',
+        }
+ 
+    
+        try{ 
+            let d = await useServerApi({action:"GET",url:'/api/dd/get/data', payload:data})
+    
+            if(d.status !== 200){
+                return showToast("Terjadi kesalahan", "error")
+            } 
+            let r = d.data.data;
+            total.value = r.total;
+            row.value = r.rows !== undefined ? r.rows : [];
+            // console.log(row);
+        }catch(e){
+            // console.log(e)
+            return showToast("Terjadi kesalahan", "error") 
+        }
+    }
+    onMounted(async()=>{
+        await getData().finally(()=>{loading.value = false}); 
+    });
 </script>
 
 <template> 
@@ -21,8 +59,11 @@
                 <h5 class="text-xl">Rekomendasi</h5>
             </div>
             <div class="grid grid-cols-5 mt-14 max-lg:grid-cols-3 max-md:grid-cols-2 gap-2" >
-               <CardProduct />
+                <CardProduct :loading="loading"  :data="row"  v-if="row.length > 0" />
+               
+                <MainLayoutPartialsSkeletonCardproduct v-for="value in Array(10)" v-if="loading"   :key="value"/>
             </div>
+            <Emptyproduct :loading="loading" :data="row" />
             <div class="flex justify-end mt-5">
                 <NuxtLink href="product-list" class="text-blue-800 hover:text-blue-900">Lihat selengkapnya</NuxtLink>
             </div>

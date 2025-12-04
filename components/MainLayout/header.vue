@@ -57,9 +57,10 @@ const items = computed<DropdownMenuItem[]>(() => {
                 </div>
 
             </div>
-            <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4" v-if="$auth_user !== undefined">
+            
+            <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4" v-if="$auth_user !== null">
                 <NuxtLink href="/dashboard" class="flex items-center space-x-2 max-md:space-x-0"> 
-                    <span>ke > Dashboard</span>
+                    <span>ke > Dashboard</span> 
                 </NuxtLink>
             </div>
             <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4" v-if="$auth_user?.name === undefined">
