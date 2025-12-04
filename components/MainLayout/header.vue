@@ -38,6 +38,15 @@ const items = computed<DropdownMenuItem[]>(() => {
 
 
 })
+
+const search = ref<String>("")
+
+const searchproduct = ()=>{
+  // console.log(search)
+
+  
+    navigateTo('/product-list?search=' + search.value) 
+}
 </script>
 
 <template>
@@ -55,7 +64,9 @@ const items = computed<DropdownMenuItem[]>(() => {
                     <input 
                         type="text"
                         placeholder="Cari sesuatu..."
+                        v-model="search"
                         class="w-full bg-transparent focus:outline-none pr-10"
+                        @keyup.enter="searchproduct"
                     />
                 </div>
 
