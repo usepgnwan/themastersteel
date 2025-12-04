@@ -26,7 +26,15 @@ const adjustTotal = (type:string) =>{
     }
 }
 
-const { $auth_user } = useNuxtApp() // user dashboard
+const { $auth_user, $auth_buyer } = useNuxtApp() // user dashboard
+const {showToast} = useGlobal();
+const addtocart = () =>{
+    console.log($auth_buyer.value)
+    if($auth_buyer.value === null){
+        showToast("Login terlebih dahulu!","warning")
+        return navigateTo('/login');
+    }
+}
 </script>
 <template>
     <section class="min-h-screen max-w-screen-xl mx-auto max-md:w-11/12 mt-32 max-lg:mt-32 space-y-10 md:px-12 xl:px-0">
@@ -76,7 +84,7 @@ const { $auth_user } = useNuxtApp() // user dashboard
                         >+</button> 
                     </div>
                     <div >
-                        <el-button type="primary" class="w-full !bg-blue-950 !ring-none">
+                        <el-button type="primary" class="w-full !bg-blue-950 !ring-none" @click="addtocart()">
                             <UIcon name="i-tdesign-cart-add"></UIcon> &nbsp;
                             Keranjang</el-button>
                     </div>

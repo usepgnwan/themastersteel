@@ -1,5 +1,40 @@
 <script setup lang="ts">
-const { $auth_user } = useNuxtApp() // user dashboard
+import type { DropdownMenuItem } from '@nuxt/ui'
+
+const { $auth_buyer , $auth_user} = useNuxtApp() // user dashboard
+
+
+let open = ref<Boolean>(false)
+const items = computed<DropdownMenuItem[]>(() => {
+  if (!$auth_buyer?.value) {
+    return []
+  }
+
+  return [
+    {
+      label: $auth_buyer.value?.name ?? '',
+      icon: 'i-gg-profile',
+      type: 'label'
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Keluar',
+      icon: 'i-material-symbols-logout',
+      type: 'checkbox',
+    //   checked: showDownloads.value,
+      async onSelect() {
+        const { showToast } = useGlobal()
+        const { BuyerSession } = useCookiedata()
+
+        BuyerSession.value = null
+        showToast("Logout berhasil", "success")
+        await navigateTo('/')
+      }
+    }
+  ]
+})
 </script>
 
 <template>
@@ -22,7 +57,7 @@ const { $auth_user } = useNuxtApp() // user dashboard
                 </div>
 
             </div>
-            <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4" v-if="$auth_user?.name !== undefined">
+            <div class="w-2/6 justify-end flex  space-x-3 max-md:space-x-1 max-md:text-xs   items-center text-white px-4" v-if="$auth_user !== undefined">
                 <NuxtLink href="/dashboard" class="flex items-center space-x-2 max-md:space-x-0"> 
                     <span>ke > Dashboard</span>
                 </NuxtLink>
@@ -52,9 +87,21 @@ const { $auth_user } = useNuxtApp() // user dashboard
                 <div>
                      |
                 </div>
-                <div class="text-white">
+                <div class="text-white" v-if="auth_buyer === undefined">
                     <NuxtLink href="/login">Login</NuxtLink>
                 </div>
+                <UDropdownMenu :items="items" :content="{ align: 'start' }" :ui="{ content: 'w-48' }" v-model:open="open" v-if="auth_buyer !== undefined"> 
+                      <div class="rounded-3xl px-3 py-1  shadow text-white  bg-gradient-to-r from-black to-black/75 items-center flex space-x-2 cursor-pointer">
+                    
+                        <div class="flex flex-col px-1">
+                          <p class="text-sm flex items-center space-x-4">
+                            <UIcon name="i-gg-profile"></UIcon>
+                            {{$auth_buyer.name ?? ""}}
+                          </p>  
+                        </div>
+                        <UIcon name="i-icon-park-outline-down" class="duration-300 transition-all" :class="open ? '':'rotate-180'"></UIcon>
+                      </div> 
+             </UDropdownMenu>
             </div>
         </div>
     </header>

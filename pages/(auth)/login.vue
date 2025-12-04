@@ -47,7 +47,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
         try{ 
             const d = rememberMe.value ? 31 : 1;
           
-            let { sessionUser } = useCookiedata(d); 
+            let { sessionUser,BuyerSession } = useCookiedata(d); 
             const config = useRuntimeConfig();
             const encrypted = CryptoJS.AES.encrypt(JSON.stringify(form), config.public.secretForm).toString(); 
             let r = { data : encrypted }
@@ -64,6 +64,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
               sessionUser.value = token;
               navigateTo('/dashboard', { external: true }) 
             }else if(role ===2){
+              BuyerSession.value = token;
               navigateTo('/', { external: true }) 
             }
             showToast("Login berhasil", "success")

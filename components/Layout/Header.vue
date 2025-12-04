@@ -31,8 +31,10 @@ const items = computed(() => [
     checked: showDownloads.value,
     onSelect() { 
         const {showToast} = useGlobal(); 
+        const { sessionUser } = useCookiedata();
+        sessionUser.value = null; 
         showToast("logout berhasil", "success")
-        return navigateTo('/auth/login')
+        return navigateTo('/login')
     }
   }
 ] satisfies DropdownMenuItem[])

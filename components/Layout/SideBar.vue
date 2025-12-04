@@ -85,7 +85,7 @@ let {loading } = useDataPartial();
     <div id="sidebard-dahsboard" class="transition-all duration-300 transform relative hidden lg:flex flex-col min-h-svh min-w-16  *: shrink-0 border-r border-default bg-elevated/25 w-(--width) bg-gradient-to-r from-black to-black/75  " :style="{ '--width': wbar }">
       <div class=" shrink-0 flex items-center gap-1.5 px-4  h-(--ui-header-height) text-white justify-center space-x-2">
       
-        <NuxtImg format="webp" src="/images/logo-steelms.png" width="150" placeholder :class="!hbar?'':'hidden'"/>
+        <NuxtImg format="webp" src="/images/logo-steelms.png" width="150" placeholder />
       </div>
       <div class="mb-2 relative mx-4 mt-2" v-if="!hbar" >
               <UIcon name="i-ion-search" class="absolute left-4 top-1/2 -translate-1/2 z-10" ></UIcon>
@@ -102,8 +102,8 @@ let {loading } = useDataPartial();
           <template #header>
               <div class="flex items-center justify-between !px-4">
                   <div class="flex items-center space-x-2 justify-center "> 
-                    <NuxtImg src="/img/logo.png" width="50" placeholder format="webp"/>
-                    <NuxtImg src="/img/logo1.png" width="100" placeholder format="webp" />
+                    
+        <NuxtImg format="webp" src="/images/logo-steelms.png" width="150" placeholder  />
                 </div>
                 <UButton color="neutral" variant="ghost" icon="i-lucide-x" @click="hideSidebar" class="cursor-pointer"/>
               </div>

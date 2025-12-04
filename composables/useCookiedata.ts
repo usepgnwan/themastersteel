@@ -5,8 +5,10 @@ export const useCookiedata = (days : number = 1) => {
         sessionUser.value = null; 
     }
 
+    const BuyerSession  = useCookie<any>('session_buyer_steel', { maxAge : maxAge });
     return {
         sessionUser, 
-        clearDataCookie
+        clearDataCookie,
+        BuyerSession
     };
 }
