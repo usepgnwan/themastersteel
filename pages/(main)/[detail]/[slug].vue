@@ -98,7 +98,7 @@ const adjustTotal = (type:string) =>{
 
         try { 
 
-            let d = await useServerApi({action:"POST",url:"/api/dd/post/data",dataform:rowCart, payload: {
+            let d = await useServerApi({action:"POST",url:"/api/dd/post/data",dataform:rowCart.value, payload: {
                 table : 'cart',
                 type_table : 'main', 
             }});
