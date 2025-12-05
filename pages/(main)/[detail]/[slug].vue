@@ -75,7 +75,7 @@ const adjustTotal = (type:string) =>{
         slug : row.value.slug,
         title : row.value.title,
         total_harga : "0",
-        user_id : $auth_buyer.value.id
+        user_id : ""
     })
     
     const { total_cart } =useCartdata() 
@@ -86,14 +86,14 @@ const adjustTotal = (type:string) =>{
         }
         rowCart.value.qty = total.value.toString()
         rowCart.value.total_harga = (total.value *  row.value.harga).toString()
-        rowCart.value.category = row.value.category,
-        rowCart.value.deskripsi = row.value.deskripsi,
-        rowCart.value.harga =  row.value.harga,
-        rowCart.value.product_id = row.value.id,
-        rowCart.value.slug = row.value.slug,
-        rowCart.value.title = row.value.title,
-        rowCart.value.product_image = row.value.product_image[0] !== undefined ? row.value.product_image[0].src : ""
-        rowCart.value.user_id = $auth_buyer.value.id
+        rowCart.value.category = row.value.category;
+        rowCart.value.deskripsi = row.value.deskripsi;
+        rowCart.value.harga =  row.value.harga;
+        rowCart.value.product_id = row.value.id;
+        rowCart.value.slug = row.value.slug;
+        rowCart.value.title = row.value.title;
+        rowCart.value.product_image = row.value.product_image[0] !== undefined ? row.value.product_image[0].src : "";
+        rowCart.value.user_id = $auth_buyer.value  !== null ? $auth_buyer.value.id : "";
    
 
         try { 
