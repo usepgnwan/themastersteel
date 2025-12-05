@@ -22,18 +22,9 @@ const adjustTotal = (type:string) =>{
     }
 }
 
-const { $auth_user, $auth_buyer } = useNuxtApp() // user dashboard
-const {showToast} = useGlobal();
-const addtocart = () =>{
-    console.log($auth_buyer.value)
-    if($auth_buyer.value === null){
-        showToast("Login terlebih dahulu!","warning")
-        return navigateTo('/login');
-    }
-}
-
-
-    let row = ref<any[]>([])
+    const { $auth_user, $auth_buyer } = useNuxtApp() // user dashboard
+    const {showToast} = useGlobal(); 
+    let row = ref<any>({})
     let loading = ref<Boolean>(true)
     const getData = async ()=>{
         loading.value = true; 
@@ -53,14 +44,91 @@ const addtocart = () =>{
 
             img.value = r.product_image
             row.value = r
-        }catch(e){
-            // console.log(e)
+        }catch(e){ 
             return showToast("Terjadi kesalahan", "error") 
         }
     }
     onMounted(async()=>{ 
         await getData().finally(()=>{loading.value = false}); 
     });
+
+    interface cart<T> {
+        category: string,
+        deskripsi: string,
+        harga: string,
+        product_id: string,
+        product_image: string,
+        qty: string,
+        slug: string,
+        title: string,
+        total_harga: string,
+        user_id: string
+    }
+
+    let rowCart = ref<cart<{}>>({
+        category : row.value.category,
+        deskripsi : row.value.deskripsi,
+        harga :  row.value.harga,
+        product_id : row.value.id,
+        product_image : "",
+        qty : "0",
+        slug : row.value.slug,
+        title : row.value.title,
+        total_harga : "0",
+        user_id : $auth_buyer.value.id
+    })
+    
+    const { total_cart } =useCartdata() 
+    const addtocart = async () =>{ 
+        if($auth_buyer.value === null){
+            showToast("Login terlebih dahulu!","warning")
+            return navigateTo('/login');
+        }
+        rowCart.value.qty = total.value.toString()
+        rowCart.value.total_harga = (total.value *  row.value.harga).toString()
+        rowCart.value.category = row.value.category,
+        rowCart.value.deskripsi = row.value.deskripsi,
+        rowCart.value.harga =  row.value.harga,
+        rowCart.value.product_id = row.value.id,
+        rowCart.value.slug = row.value.slug,
+        rowCart.value.title = row.value.title,
+        rowCart.value.product_image = row.value.product_image[0] !== undefined ? row.value.product_image[0].src : ""
+        rowCart.value.user_id = $auth_buyer.value.id
+   
+
+        try { 
+
+            let d = await useServerApi({action:"POST",url:"/api/dd/post/data",dataform:rowCart, payload: {
+                table : 'cart',
+                type_table : 'main', 
+            }});
+
+            if(d.status === 200 || d.status === 201){ 
+                showToast('Cart Berhasil disimpan' , 'success')
+                navigateTo('/cart');
+            } else{
+                
+                if(d.status === 400){
+                    return showToast(d.error, "error")
+                }
+                return showToast("Terjadi kesalahan", "error")
+            } 
+
+            await getCart($auth_buyer.value.id).then((v)=>{ 
+                let data = [];
+                if(v.value.code == 200){
+                    data = v.value.data
+                } 
+                total_cart.value = data.reduce((carry, v)=> carry + Number(v.qty),0)
+            
+            }) 
+        }catch(e){   
+            if (e?.response?.status === 400 || e?.status === 400) {
+                return showToast(e?.response?._data?.error || "error", "warning")
+            }
+            showToast("terjadi kesalahan", "error")
+        }
+    }
 </script>
 <template>
     <section class="min-h-screen max-w-screen-xl mx-auto max-md:w-11/12 mt-32 max-lg:mt-32 space-y-10 md:px-12 xl:px-0">

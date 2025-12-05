@@ -30,7 +30,7 @@ const items = computed<DropdownMenuItem[]>(() => {
 
             BuyerSession.value = null
             showToast("Logout berhasil", "success")
-            await navigateTo('/')
+            await navigateTo('/',  { external: true })
           }
         }
       ]
@@ -47,6 +47,20 @@ const searchproduct = ()=>{
   
     navigateTo('/product-list?search=' + search.value) 
 }
+
+const { total_cart } =useCartdata() 
+onMounted(async()=>{  
+   if ( $auth_buyer.value !== null){
+      await getCart($auth_buyer.value.id).then((v)=>{ 
+          let data = [];
+          if(v.value.code == 200){
+              data = v.value.data
+          }
+        total_cart.value = data.reduce((carry, v)=> carry + Number(v.qty),0)
+      }) 
+   }
+  
+});
 </script>
 
 <template>
@@ -83,21 +97,21 @@ const searchproduct = ()=>{
                         name="i-mingcute-notification-line" 
                         class=" text-xl"
                     />
-                    <span>3</span>
+                    <!-- <span>3</span> -->
                 </div>
                 <div class="flex items-center space-x-2 max-md:space-x-0">
                      <UIcon 
                         name="i-lucide-heart" 
                         class=" text-xl"
                     />
-                    <span>3</span>
+                    <!-- <span>3</span> -->
                 </div>
                 <NuxtLink href="/cart" class="flex items-center space-x-2 max-md:space-x-0">
                      <UIcon 
                         name="i-uil-cart" 
                         class="  text-xl"
                     />
-                    <span>3</span>
+                    <span>{{ total_cart }}</span>
                 </NuxtLink>
                 <div>
                      |
