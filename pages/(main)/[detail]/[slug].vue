@@ -95,9 +95,9 @@ const adjustTotal = (type:string) =>{
         rowCart.value.product_image = row.value.product_image[0] !== undefined ? row.value.product_image[0].src : "";
         rowCart.value.user_id = $auth_buyer.value  !== null ? $auth_buyer.value.id : "";
    
-
+        console.log(rowCart.value)
         try { 
-
+            
             let d = await useServerApi({action:"POST",url:"/api/dd/post/data",dataform:rowCart.value, payload: {
                 table : 'cart',
                 type_table : 'main', 
